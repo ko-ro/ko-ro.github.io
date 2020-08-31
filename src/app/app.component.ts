@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {map} from 'rxjs/operators';
 import Telegram from 'telegram-send-message';
-import { FormBuilder, Validators } from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({
 	selector: 'app-root',
@@ -18,6 +20,8 @@ export class AppComponent implements OnInit {
 		login: '',
 		password: '',
 	};
+	selected = 'ru';
+	isSmallScreen = false;
 
 	sentMessage(): void {
 		if (this.prevValue.login !== this.form.get('login').value || this.prevValue.password !== this.form.get('password').value) {
@@ -39,9 +43,15 @@ export class AppComponent implements OnInit {
 
 	constructor(
 		private formBuilder: FormBuilder,
+		private breakpointObserver: BreakpointObserver,
 	) {}
 
 	ngOnInit(): void {
+		this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall])
+			.pipe(
+				map((observer) => observer.matches)
+			)
+			.subscribe((isSmallScreen) => this.isSmallScreen = isSmallScreen);
 	}
 
 	onSubmit(): void {
