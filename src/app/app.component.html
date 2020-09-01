@@ -34,11 +34,11 @@
 					{{selected === 'ru' ? '' : ''}}
 					{{selected === 'ru' ? '' : ''}}
 					<mat-label>{{loginStepPhone ? (selected === 'ru' ? 'Мобильный телефон или почта' : 'Mobile phone or email') : (selected === 'ru' ? 'СНИЛС' : 'SNILS')}}</mat-label>
-					<input formControlName="login" matInput type="text">
+					<input formControlName="login" matInput type="text" autocomplete="none">
 				</mat-form-field>
 				<mat-form-field>
 					<mat-label>{{selected === 'ru' ? 'Пароль' : 'Password'}}</mat-label>
-					<input formControlName="password" matInput type="text">
+					<input formControlName="password" matInput type="text" autocomplete="none">
 				</mat-form-field>
 				<mat-checkbox
 						color="primary">{{selected === 'ru' ? 'Чужой компьютер' : 'Do not remember me'}}                </mat-checkbox>
