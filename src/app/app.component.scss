@@ -37,7 +37,7 @@ header {
 
 .page-login {
 	margin: 0 auto;
-	max-width: 320px;
+	max-width: 380px;
 	text-align: center;
 
 	.login {
@@ -421,7 +421,7 @@ mat-checkbox {
 	width: 18px;
 }
 
-@media screen and (min-width: 360px) {
+@media screen and (max-width: 800px) {
 	.page-login {
 		max-width: 360px;
 	}
