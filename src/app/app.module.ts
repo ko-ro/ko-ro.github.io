@@ -49,10 +49,12 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {ReactiveFormsModule} from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+		LoginComponent
 	],
 	imports: [
 		BrowserModule,
